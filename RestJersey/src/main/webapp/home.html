@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+    <img src = "qa.jpg" style="width:250px; height:100px;"/>
+ 	  <button onclick="location.href='index.html'" style = "float:right;">Home
+  </button>
+ 	<center>
+ 	 <h1>Home Page</h1>
+         <div class = "back" style = "width:40%">
+	 <button onclick = "location.href = 'rest/hello/viewall'">View All Comments</button>
+     <button onclick = "location.href = 'rest/hello/YourComments'">View Your Comments</button>
+   
+<button onclick = openForm()>Add Comment</button>
+     <form action="rest/hello/AddComment" method="post" id="myForm" style="display: none;">
+    
+     <label>Comment:</label><br>
+     <textarea rows="4" cols="30" name="comment"></textarea><br>
+     <input type="Submit" value = "Add">
+     
+     </form>
+     </div> 
+        </center>
+     <script>
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+</script>
+</body>
+</html>
