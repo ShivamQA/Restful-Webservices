@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="styles.css">
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
     <body>
     <img src = "qa.jpg" style="width:250px; height:100px;"/>
@@ -11,8 +12,8 @@
  	<center>
  	 <h1>Home Page</h1>
          <div class = "back" style = "width:40%">
-	 <button onclick = "location.href = 'rest/hello/viewall'">View All Comments</button>
-     <button onclick = "location.href = 'rest/hello/YourComments'">View Your Comments</button>
+	 <button onclick = comments()>View All Comments</button>
+     <button onclick = yourcomment()>View Your Comments</button>
    
 <button onclick = openForm()>Add Comment</button>
      <form action="rest/hello/AddComment" method="post" id="myForm" style="display: none;">
@@ -22,12 +23,132 @@
      <input type="Submit" value = "Add">
      
      </form>
+     <div class="card"></div>  
+     
+     <div class="your"></div>
      </div> 
-        </center>
+     
+           </center>
      <script>
 function openForm() {
   document.getElementById("myForm").style.display = "block";
+  var comment = document.getElementsByClassName('card'), i;
+
+	for (var i = 0; i < comment.length; i ++) {
+	    comment[i].style.display = 'none';
+	} 
+	var comment2 = document.getElementsByClassName('your'), i;
+
+	for (var i = 0; i < comment2.length; i ++) {
+	    comment2[i].style.display = 'none';
+	} 
+	
 }
+function yourcomment()
+{	
+	 $('.your').empty();
+	var comment = document.getElementsByClassName('card'), i;
+	for (var i = 0; i < comment.length; i ++) {
+	comment[i].style.display = 'none';
+	}
+	
+
+	var comment2 = document.getElementsByClassName('your'), i;
+
+	for (var i = 0; i < comment2.length; i ++) {
+	    comment2[i].style.display = 'block';
+	} 
+	var j=0;
+	
+
+		$.ajax({
+		    url: "http://localhost:8014/RestJersey/rest/hello/YourComments", 
+		    cache: false,
+		    success: function(response) {
+		        result = $(response).find("#result");
+		    			 		
+		        while(j<result.prevObject.length)
+		 
+		{
+		        	var b1 = document.querySelector(".your");
+		   var a1 = document.createElement("div");
+		   
+		
+		
+		 
+		   var y1 = document.createElement("h4");
+		    y1.textContent = "Name:"+result.prevObject[j].Name;
+		  
+		   y1.style.paddingLeft = "1rem";
+		  var z1 = document.createElement("p");
+		  z1.textContent = "Comment:  "+result.prevObject[j].Comment;
+		  z1.style.paddingLeft = "1rem";
+		   
+		
+		   a1.appendChild(y1);
+		   a1.appendChild(z1);
+		     b1.appendChild(a1);
+		  j++;
+		}
+		        
+		    }  
+		}); 
+	 	
+		}
+function comments()
+{
+	$('.card').empty();
+	/* var comment = document.getElementsByClassName('back'), i;
+
+	for (var i = 0; i < comment.length; i ++) {
+	    comment[i].style.display = 'none';
+	} */
+	var comment = document.getElementsByClassName('your'), i;
+
+	for (var i = 0; i < comment.length; i ++) {
+	    comment[i].style.display = 'none';
+	} 
+	var comment2 = document.getElementsByClassName('card'), i;
+
+	for (var i = 0; i < comment2.length; i ++) {
+	    comment2[i].style.display = 'block';
+	} 
+	var i=0;
+var b = document.querySelector(".card");
+	$.ajax({
+	    url: "http://localhost:8014/RestJersey/rest/hello/viewall", 
+	    cache: false,
+	    success: function(response) {
+	        result = $(response).find("#result");
+	 
+	        while(i<result.prevObject.length)
+	 
+	{
+
+	   var a = document.createElement("div");
+	   
+	
+	
+	 
+	   var y = document.createElement("h4");
+	    y.textContent = "Name:"+result.prevObject[i].Name;
+	  
+	   y.style.paddingLeft = "1rem";
+	  var z = document.createElement("p");
+	  z.textContent = "Comment:  "+result.prevObject[i].Comment;
+	  z.style.paddingLeft = "1rem";
+	   
+	
+	   a.appendChild(y);
+	   a.appendChild(z);
+	     b.appendChild(a);
+	  i++;
+	}
+	        
+	    }  
+	}); 
+ 	
+	}
 </script>
 </body>
 </html>
